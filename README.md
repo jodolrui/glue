@@ -3,7 +3,7 @@
 Installation:
 
 ```
-npm install “@jodolrui/composer”
+npm install “@jodolrui/glue”
 ```
 
 Example of use:
@@ -11,7 +11,7 @@ Example of use:
 ```js
 // parts/value.js
 import { ref } from "vue";
-import { expose } from "@jodolrui/composer";
+import { expose } from "@jodolrui/glue";
 
 export default {
   setup() {
@@ -23,7 +23,7 @@ export default {
 
 ```js
 // parts/down.js
-import { expose, exposed } from "@jodolrui/composer";
+import { expose, exposed } from "@jodolrui/glue";
 
 export default {
   setup() {
@@ -39,7 +39,7 @@ export default {
 
 ```js
 // parts/up.js
-import { expose, exposed } from "@jodolrui/composer";
+import { expose, exposed } from "@jodolrui/glue";
 
 export default {
   setup() {
@@ -62,7 +62,7 @@ import { compose } from "@jodolrui/composer";
 import value from "./parts/value";
 import up from "./parts/up";
 import down from "./parts/down";
-export default compose("Counter", { parts: [value, up, down] }); // component is composed from the parts
+export default compose("Counter", [value, up, down]); // component is composed from the parts
 </script>
 
 <template>
