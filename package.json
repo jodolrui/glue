@@ -1,0 +1,18 @@
+{
+  "name": "@jodolrui/glue",
+  "version": "1.0.0",
+  "description": "Total feature separation in Vue 3 Composition API components",
+  "main": "glue.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "vue-composition-api",
+    "vue3-composition-api"
+  ],
+  "author": "Jose Dolz",
+  "license": "ISC",
+  "types": "./glue.d.ts"
+}
