@@ -1,6 +1,4 @@
-# Glue 
-
-## Total feature separation
+# Glue (total feature separation in Vue components)
 
 Glue is a [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) improvement that provides total feature separation in Vue components.
 
