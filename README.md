@@ -6,13 +6,15 @@ Glue is intended for better code organization and less scrolling.
 
 ![Total feature separation with Glue](/images/feature-separation.png)
 
-## Installation:
+## Installation
 
 ```
 npm install “@jodolrui/glue”
 ```
 
-## Example of use:
+## Example of use
+
+### The issue
 
 This is a typical [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) component with two features (`foo` and `bar`):
 
@@ -41,6 +43,8 @@ Notice that both features (`foo` and `bar`) appear mixed at some parts of the co
 * At `emits` declaration.
 * Throughout `setup` function.
 * At `return` statement.
+
+### Glue solution
 
 With Glue you can totally separate features into parts/files:
 
@@ -78,7 +82,7 @@ export default {
 
 Note that each part/file is written in normal [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) syntax. So you don't have to learn anything new to create them.
 
-Finally, parts of components must to be assembled with function `compose`:
+Finally, parts must to be assembled with function `compose`:
 
 ```js
 // Foobar.vue
@@ -100,7 +104,9 @@ Order of parts in array is very important because it defines order of execution.
 
 ## Exposing variables and function to the template
 
-This is a typical declaration, in [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html), of a variable exposed (returned) to the `<template>`:
+### The issue
+
+This is a typical declaration of a variable exposed (returned) to the `<template>` in a [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) component:
 
 ```js
 import { ref } from "vue";
@@ -116,6 +122,8 @@ Notice that you have to:
 
 * Declare the variable (`let foo`) and assign it a value (`= ref("bar")`)
 * `return` a literal object containing the variable (`return { foo }`)
+
+### Glue solution
 
 Glue function `expose` allows you to achieve the same without having to `return`:
 
@@ -186,7 +194,7 @@ can be imported into another part of the same component calling function `expose
 const { foo } = exposed(); 
 ```
 
-or like this:
+or this way:
 
 ```js
 exposed().foo; 
@@ -206,7 +214,7 @@ It's important to know that both components must to be created with function `co
 
 Notice that only previously exposed elements can be imported, so that order of component mounting and, order of parts in the array passed to function `compose`, are determining.
 
-If you try to retrieve an inexistent exposed element (or a misspelled one), Glue will throw an error:
+If you try to retrieve an nonexistent exposed element (or a misspelled one), Glue will throw an error:
 
 > [Glue error] Unknown key 'foo' in 'exposed' function.
 
@@ -218,7 +226,7 @@ Function `expose` and, `exposed` referring to the same component (aka `exposed()
 
 > [Glue error] Cannot use 'exposed' in this scope.
 
-If you need to use `expose` and `exposed()` outside setup or lifecycle hooks, you can call `expose` and `exposed()` on setup and use the returned instance instead.
+If you need to use `expose` and `exposed()` outside setup or lifecycle hooks, you can call `expose` and `exposed()` on setup and use the instance instead.
 
 
 
