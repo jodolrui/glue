@@ -1,6 +1,6 @@
 {
   "name": "@jodolrui/glue",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Total feature separation in Vue 3 Composition API components",
   "main": "glue.js",
   "scripts": {
@@ -14,5 +14,13 @@
   ],
   "author": "Jose Dolz",
   "license": "ISC",
-  "types": "./glue.d.ts"
+  "types": "./glue.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jodolrui/glue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jodolrui/glue/issues"
+  },
+  "homepage": "https://github.com/jodolrui/glue#readme"
 }
