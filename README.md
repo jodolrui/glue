@@ -1,6 +1,6 @@
 # Glue (total feature separation in Vue 3 Composition API components)
 
-Glue is a [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) improvement that provides total feature separation for better code organization and less scrolling.
+Glue is an improvement that provides total feature separation in [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html), for better code organization and less scrolling.
 
 ![Total feature separation with Glue](/images/feature-separation.png)
 
@@ -12,7 +12,7 @@ npm install “@jodolrui/glue”
 
 ## Example of use:
 
-A typical [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) [Single File Component](https://v3.vuejs.org/api/sfc-spec.html#sfc-syntax-specification) with two features (`foo` and `bar`) looks like this:
+A typical Vue 3 Composition API [Single File Component](https://v3.vuejs.org/api/sfc-spec.html#sfc-syntax-specification) with two features (`foo` and `bar`) looks like this:
 
 ```js
 // Foobar.vue
@@ -76,7 +76,7 @@ export default {
 
 Note that each part/file is written using normal [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) syntax.
 
-Finally the parts of the component must to be assemblied using function `compose`:
+Finally the parts of the component must to be assembled using function `compose`:
 
 ```js
 // Foobar.vue
@@ -89,7 +89,7 @@ export default compose("Foobar", [foo, bar]);
 </script>
 ```
 
-Function `compose(name, parts)` takes two parameters:
+Function `compose` takes two parameters:
 
 * The `name` of the component (i.e. `"Foobar"`).
 * An array of `parts` (i.e. `[foo, bar]`).
@@ -98,7 +98,7 @@ Order of parts in array is very important because defines order of execution.
 
 ## Exposing variables and function to the template
 
-A typical declaration in [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) of a variable exposed (returned) to the `<template>` looks like this:
+This is typical declaration, in [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html), of a variable exposed (returned) to the `<template>`:
 
 ```js
 import { ref } from "vue";
@@ -127,31 +127,29 @@ export default {
 };
 ```
 
-In this case, function `expose(key, object)` takes two parameters:
+In this case, function `expose` takes two parameters:
 
 * The `key` or name by which the element will be called in the `template` (i.e. `"foo"`).
 * The `object` of the element itself (i.e. `ref("bar")`).
 
-Function `expose` returns the element itself. You can pass it to a variable when exposing if you need:
+Function `expose` returns the element passed itself, so you can assign it to a variable when exposing:
 
 ```js
 const foo = expose("foo", ref("bar"));
 ```
 
-Notice that `const foo` defines the name of the variable and `expose("foo"` defines the name by which the element will be called in the `template`, so they can be different names.
-
-Another syntax for function `expose` is as follows:
+Another syntax for `expose` is as follows:
 
 ```js
 const foo = ref("bar");
 expose({ foo });
 ```
 
-In this case function `expose(object)` takes only one parameter`:
+In this case function `expose` takes only one parameter:
 
-* A literal `object` containing, at root level, elements to expose.
+* A literal `object` containing elements to expose, at root level.
 
-With this syntax you can expose multiple elements at once, similar as you would do with `return`:
+With this syntax you can expose multiple elements at once:
 
 ```js
 const foo = ref("bar");
@@ -159,12 +157,12 @@ const bar = () => console.log(`value is ${foo.value}`);
 expose({ foo, bar });
 ```
 
-Notice that function `espose` doesn't need to be called at the end of `setup` method, as `return` does. You can `expose` elements at the very time they are defined or immediately thereafter. This strengthens feature separation.
+Notice that function `expose` can be called throughout function `setup`, so that you can `expose` elements at the very time they are defined or immediately thereafter. This strengthens feature separation.
 
 
-## Sharing variables and functions between parts (and components)
+## Sharing variables and functions between parts or components
 
-Elements exposed with Glue can be imported into another parts or components. Only previously exposed elements can be imported, therefore order of component mounting and, order of parts in the array passed to function `compose`, are determining.
+Elements exposed with Glue can be imported into another parts or components.
 
 An exposed element like this:
 
@@ -180,25 +178,25 @@ const foo = ref("bar");
 return { foo };
 ```
 
-can be imported into another part of the same component using function `exposed`:
+can be imported into another part **of the same component** calling function `exposed()`:
 
 ```js
 const { foo } = exposed(); 
 ```
 
-Notice that function `exposed` takes no parameters when importing from the same component.
-
-To import from another component, `exposed` has to take one parameter:
+To import **from another** component `exposed` has to take one parameter:
 
 ```js
 const { foo } = exposed("Foobar"); 
 ```
 
-This parameter in `exposed(name)` is:
+This parameter is:
 
 * The `name` of the component to import from (i.e. `"Foobar"`).
 
 It's important to know that both components must to be created with function `compose` in order to work.
+
+Notice that only previously exposed elements can be imported, so that order of component mounting and, order of parts in the array passed to function `compose`, are determining.
 
 ## Limitations on the use of functions 'expose' and 'exposed'
 
