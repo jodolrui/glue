@@ -102,11 +102,11 @@ Function `compose` takes two parameters:
 
 Order of parts in array is very important because it defines order of execution.
 
-## Exposing variables and function to the template
+## Exposing variables and functions to the template
 
 ### The issue
 
-This is a typical declaration of a variable exposed (returned) to the `<template>` in a [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) component:
+This is a typical declaration of a variable exposed to the `<template>` in a [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) component:
 
 ```js
 import { ref } from "vue";
@@ -142,24 +142,24 @@ In this case, function `expose` takes two parameters:
 * The `key` or name by which the element will be referred in the `template` (i.e. `"foo"`).
 * The `object` of the element itself (i.e. `ref("bar")`).
 
-Function `expose` returns the passed element itself, so you can assign it to a variable when exposing:
+Function `expose` returns the passed element itself, so you can assign it to a variable:
 
 ```js
 const foo = expose("foo", ref("bar"));
 ```
 
-Another syntax for `expose` is as follows:
+### Alternative syntax
+
+Another syntax for `expose` is:
 
 ```js
 const foo = ref("bar");
 expose({ foo });
 ```
 
-In this case function `expose` takes only one parameter:
+In this case function `expose` takes only one parameter: a literal `object` containing elements to expose.
 
-* A literal `object` containing elements to expose.
-
-With this syntax you can expose multiple elements at once:
+The advantage of this syntax is that you can expose multiple elements:
 
 ```js
 const foo = ref("bar");
@@ -206,9 +206,7 @@ To import from another component `exposed` has to take one parameter:
 const { foo } = exposed("Foobar"); 
 ```
 
-That parameter is:
-
-* The `name` of the component to import from (i.e. `"Foobar"`).
+That parameter is the `name` of the component to import from (i.e. `"Foobar"`).
 
 It's important to know that both components must to be created with function `compose` in order this to work.
 
@@ -226,7 +224,7 @@ Function `expose` and, `exposed` referring to the same component (aka `exposed()
 
 > [Glue error] Cannot use 'exposed' in this scope.
 
-If you need to use `expose` and `exposed()` outside setup or lifecycle hooks, you can call `expose` and `exposed()` on setup and use the instance instead.
+If you need to use `expose` or `exposed()` outside setup or lifecycle hooks, you can call `expose` and `exposed()` on setup and use the instance instead.
 
 
 
