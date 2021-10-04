@@ -224,7 +224,7 @@ Function `expose` and, `exposed` referring to the same component (aka `exposed()
 
 > [Glue error] Cannot use 'exposed' in this scope.
 
-If you need to use `expose` or `exposed()` outside setup or lifecycle hooks, you can call `expose` and `exposed()` on setup and use the instance instead.
+If you need to use `expose` or `exposed()` outside setup or lifecycle hooks, you can call them on setup and use the instance instead.
 
 
 
