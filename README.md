@@ -88,9 +88,9 @@ Finally, parts must to be assembled with function `compose`:
 // Foobar.vue
 <template>{{ foo }} {{ bar }}</template>
 <script>
-import { compose } from "glue";
-import foo from "./foo.js";
-import bar from "./bar.js";
+import { compose } from "@jodolrui/glue";
+import foo from "./foo";
+import bar from "./bar";
 export default compose("Foobar", [foo, bar]);
 </script>
 ```
@@ -129,7 +129,7 @@ Glue function `expose` allows you to achieve the same without having to `return`
 
 ```js
 import { ref } from "vue";
-import { expose } from "glue";
+import { expose } from "@jodolrui/glue";
 export default {
   setup() {
     expose("foo", ref("bar"));
@@ -139,12 +139,14 @@ export default {
 
 In this case, function `expose` takes two parameters:
 
-* The `key` or name by which the element will be referred in the `template` (i.e. `"foo"`).
+* The `key` or name by which the element will be referred in the `<template>` (i.e. `"foo"`).
 * The `object` of the element itself (i.e. `ref("bar")`).
 
 Function `expose` returns the passed element itself, so you can assign it to a variable:
 
 ```js
+import { expose } from "@jodolrui/glue";
+// ...
 const foo = expose("foo", ref("bar"));
 ```
 
@@ -153,6 +155,8 @@ const foo = expose("foo", ref("bar"));
 Another syntax for `expose` is:
 
 ```js
+import { expose } from "@jodolrui/glue";
+// ...
 const foo = ref("bar");
 expose({ foo });
 ```
@@ -162,6 +166,8 @@ In this case function `expose` takes only one parameter: a literal `object` cont
 The advantage of this syntax is that you can expose multiple elements:
 
 ```js
+import { expose } from "@jodolrui/glue";
+// ...
 const foo = ref("bar");
 const bar = () => console.log(`value is ${foo.value}`);
 expose({ foo, bar });
@@ -191,22 +197,28 @@ return { foo };
 can be imported into another part of the same component calling function `exposed()`:
 
 ```js
+import { exposed } from "@jodolrui/glue";
+// ...
 const { foo } = exposed(); 
 ```
 
 or this way:
 
 ```js
+import { exposed } from "@jodolrui/glue";
+// ...
 exposed().foo; 
 ```
 
 To import from another component `exposed` has to take one parameter:
 
 ```js
+import { exposed } from "@jodolrui/glue";
+// ...
 const { foo } = exposed("Foobar"); 
 ```
 
-That parameter is the `name` of the component to import from (i.e. `"Foobar"`).
+The parameter is the `name` of the component to import from (i.e. `"Foobar"`).
 
 It's important to know that both components must to be created with function `compose` in order this to work.
 
@@ -226,8 +238,67 @@ Function `expose` and, `exposed` referring to the same component (aka `exposed()
 
 If you need to use `expose` or `exposed()` outside setup or lifecycle hooks, you can call them on setup and use the instance instead.
 
+## Typescript errors in file *.vue
 
+If using Glue with typescript it is possible that your IDE show errors in the `*.vue` file indicating that the variables you exposed to the `<template>` are unknown. This issue doesn't break the application, which should work correctly, but they can be annoying. To avoid this problem I suggest disabling typescript in the `*.vue` file as follows.
 
+Remove `*.vue` extension from `tsconfig.json`:
+
+```js
+// "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"]
+```
+
+Remove reference to typescript language from `*.vue` file:
+
+```js
+// <script lang="ts">
+<script>
+```
+
+## Separation of html and css
+
+If you want to separate `html` and `css` out of the `*.vue` file, you can have something like this:
+
+```js
+// index.vue
+<script src="./script.js"></script>
+<style scoped src="./style.css"></style>
+<template src="./template.html"></template>
+```
+
+```js
+// script.js
+import { compose } from "@jodolrui/glue";
+import foo from "./parts/foo";
+export default compose("Foo", [foo]);
+```
+
+```js
+// parts/foo.js
+import { ref } from "vue";
+import { expose } from "@jodolrui/glue";
+export default {
+  props: { foo: { type: String, default: "Foo" } },
+  emits: ["foo"],
+  setup(props, context) {
+    expose("foo", ref(props.foo));
+    context.emit("foo");
+  },
+};
+```
+
+```html
+<!-- template.html -->
+<p>{{ foo }}</p>
+```
+
+```css
+/* type.css */
+* {
+  color: black;
+}
+```
 
 
 
