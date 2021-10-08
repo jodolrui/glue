@@ -80,7 +80,7 @@ export default {
 };
 ```
 
-Note that each part/file is written in normal [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) syntax. So you don't have to learn anything new to create them.
+Note that each part/file is written in normal [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) syntax, so you don't have to learn anything new to create them.
 
 Finally, parts must to be assembled with function `compose`:
 
@@ -163,7 +163,7 @@ expose({ foo });
 
 In this case function `expose` takes only one parameter: a literal `object` containing elements to expose.
 
-The advantage of this syntax is that you can expose multiple elements:
+The advantage of this syntax is that you can expose multiple elements in one line:
 
 ```js
 import { expose } from "@jodolrui/glue";
@@ -222,7 +222,7 @@ The parameter is the `name` of the component to import from (i.e. `"Foobar"`).
 
 It's important to know that both components must to be created with function `compose` in order this to work.
 
-Notice that only previously exposed elements can be imported, so that order of component mounting and, order of parts in the array passed to function `compose`, are determining.
+Notice that only previously exposed elements can be imported, so that order of component mounting and order of parts in the array passed to function `compose` are determining.
 
 If you try to retrieve an nonexistent exposed element (or a misspelled one), Glue will throw an error:
 
@@ -230,7 +230,7 @@ If you try to retrieve an nonexistent exposed element (or a misspelled one), Glu
 
 ## Limitations on the use of functions 'expose' and 'exposed'
 
-Function `expose` and, `exposed` referring to the same component (aka `exposed()`), only work during setup or lifecycle hooks, as they internally make use of the Vue function [`getCurrentInstance`](https://v3.vuejs.org/api/composition-api.html#getcurrentinstance) wich has such limitation. So Glue will throw an error if they are used in invalid scopes:
+Function `expose` and function `exposed` referring to the same component (aka `exposed()`) only work during setup or lifecycle hooks, as they internally make use of the Vue function [`getCurrentInstance`](https://v3.vuejs.org/api/composition-api.html#getcurrentinstance), wich has such limitation. So Glue will throw an error if they are used in invalid scopes:
 
 > [Glue error] Cannot use 'expose' in this scope.
 
@@ -238,9 +238,9 @@ Function `expose` and, `exposed` referring to the same component (aka `exposed()
 
 If you need to use `expose` or `exposed()` outside setup or lifecycle hooks, you can call them on setup and use the instance instead.
 
-## Typescript errors in file *.vue
+## Typescript errors in *.vue file
 
-If using Glue with typescript it is possible that your IDE show errors in the `*.vue` file indicating that the variables you exposed to the `<template>` are unknown. This issue doesn't break the application, which should work correctly, but they can be annoying. To avoid this problem I suggest disabling typescript in the `*.vue` file as follows.
+If using Glue with typescript it is possible that your IDE show errors in the `*.vue` file indicating that variables you exposed to the `<template>` are unknown. This issue doesn't break the application, which should work correctly, but they can be annoying. To avoid this problem I suggest disabling typescript in the `*.vue`.
 
 Remove `*.vue` extension from `tsconfig.json`:
 
@@ -258,7 +258,7 @@ Remove reference to typescript language from `*.vue` file:
 
 ## Separation of html and css
 
-If you want to separate `html` and `css` out of the `*.vue` file, you can have something like this:
+If you want to separate `html` and `css` out of the `*.vue` file, you can do something like this:
 
 ```js
 // index.vue
