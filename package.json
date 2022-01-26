@@ -1,6 +1,6 @@
 {
   "name": "@jodolrui/glue",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Total feature separation in Vue 3 Composition API components",
   "main": "glue.js",
   "scripts": {

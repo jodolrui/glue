@@ -12,6 +12,13 @@ Glue is intended for better code organization and less scrolling.
 npm install “@jodolrui/glue”
 ```
 
+## Version
+* __1.0.4__ Typescript support in `exposed()` function.
+
+* __1.0.3__ Add license.
+
+* __1.0.1__ First version.
+
 ## Example of use
 
 ### The issue
@@ -208,6 +215,18 @@ or this way:
 import { exposed } from "@jodolrui/glue";
 // ...
 exposed().foo; 
+```
+
+You can also import with `typescript` support this way:
+
+```ts
+import { exposed } from "@jodolrui/glue";
+// ...
+type Type = {
+  foo: Ref<string>;
+}
+// ...
+const { foo } = exposed<Type>(); 
 ```
 
 To import from another component `exposed` has to take one parameter:
