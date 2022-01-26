@@ -42,4 +42,4 @@ export declare function expose(
         },
       ]
 ): any;
-export declare function exposed(component?: string): any;
+export declare function exposed<T = any>(component?: string): T;
