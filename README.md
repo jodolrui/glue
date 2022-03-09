@@ -89,10 +89,10 @@ export default {
 
 Note that each part/file is written in normal [Vue 3 Composition API](https://v3.vuejs.org/guide/composition-api-introduction.html) syntax, so you don't have to learn anything new to create them.
 
-Finally, parts must to be assembled with function `compose`:
+Finally, parts must to be assembled with function `compose` in `Foobar.vue` component file:
 
-```js
-// Foobar.vue
+```html
+<!-- Foobar.vue -->
 <template>{{ foo }} {{ bar }}</template>
 <script>
 import { compose } from "@jodolrui/glue";
@@ -107,7 +107,15 @@ Function `compose` takes two parameters:
 * The `name` of the component (i.e. `"Foobar"`).
 * An array of `parts` (i.e. `[foo, bar]`).
 
-Order of parts in array is very important because it defines order of execution.
+__Warning:__ Order of parts in array is very important because it defines order of execution.
+
+You have to import `Foobar.vue` file from your parent component as usual in order to use it:
+
+```js
+import Foobar from './Foobar.vue'
+// ...
+<Foobar />
+```
 
 ## Exposing variables and functions to the template
 
@@ -279,8 +287,8 @@ Remove reference to typescript language from `*.vue` file:
 
 If you want to separate `html` and `css` out of the `*.vue` file, you can do something like this:
 
-```js
-// index.vue
+```html
+<!-- index.vue -->
 <script src="./script.js"></script>
 <style scoped src="./style.css"></style>
 <template src="./template.html"></template>
@@ -327,7 +335,7 @@ You only have to put your parts into `*.vue` files within a `<script setup>` tag
 
 Here you have an example:
 
-`foo.js` part/file:
+`foo.vue` part/file:
 
 ```html
 <!-- foo.vue -->
@@ -337,7 +345,7 @@ let foo = ref("Foo");
 </script>
 ```
 
-`bar.js` part/file:
+`bar.vue` part/file:
 
 ```html
 <!-- bar.vue -->
@@ -350,7 +358,7 @@ let foobar = ref(foo.value + bar.value);
 </script>
 ```
 
-Assemble with function `compose` as usual:
+Assemble with function `compose` in `Foobar.vue` component file:
 
 ```html
 <!-- Foobar.vue -->
