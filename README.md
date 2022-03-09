@@ -319,6 +319,56 @@ export default {
 }
 ```
 
+## Using with `<script setup>`
+
+You can use `glue` with [`<script setup>`](https://vuejs.org/api/sfc-script-setup.html) syntactic sugar.
+
+You only have to put your parts into `*.vue` files within a `<script setup>` tag and then assemble them with `compose` function as usual.
+
+Here you have an example:
+
+`foo.js` part/file:
+
+```html
+<!-- foo.vue -->
+<script setup>
+import { ref } from "vue";
+let foo = ref("Foo");
+</script>
+```
+
+`bar.js` part/file:
+
+```html
+<!-- bar.vue -->
+<script setup>
+import { ref } from "vue";
+import { exposed } from "@jodolrui/glue";
+let bar = ref("Bar");
+let { foo } = exposed();
+let foobar = ref(foo.value + bar.value);
+</script>
+```
+
+Assemble with function `compose` as usual:
+
+```html
+<!-- Foobar.vue -->
+<template>{{foo}} + {{bar}} = {{ foobar }}</template> <!-- prints "Foo + Bar = FooBar" -->
+<script>
+import { compose } from "@jodolrui/glue";
+import foo from "./foo.vue"; // don't forget .vue extension
+import bar from "./bar.vue"; // don't forget .vue extension
+export default compose("Foobar", [foo, bar]);
+</script>
+```
+
+Note that using `<script setup>` you don't need to use `expose` function.
+
+
+
+
+
 
 
 
