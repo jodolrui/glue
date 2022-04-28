@@ -9,7 +9,7 @@ Glue is intended for better code organization and less scrolling.
 ## Installation
 
 ```
-npm install “@jodolrui/glue”
+npm install @jodolrui/glue
 ```
 
 ## Version
