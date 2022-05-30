@@ -12,7 +12,7 @@ export interface GlueInstance {
     | ((
         funct: (props: object, context: object) => object,
         props: object,
-        context: object,
+        context: object
       ) => void)
     | undefined;
   preinclude: ((funct: () => object) => void) | undefined;
@@ -22,7 +22,7 @@ export interface GlueInstance {
       | [
           {
             [key: string]: any;
-          },
+          }
         ]
   ) => any;
   exposed: () => any;
@@ -39,7 +39,8 @@ export declare function expose(
     | [
         {
           [key: string]: any;
-        },
+        }
       ]
 ): any;
 export declare function exposed<T = any>(component?: string): T;
+export declare function defineState<T>(defaultValue: T | {}): T;

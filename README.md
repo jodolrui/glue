@@ -13,6 +13,8 @@ npm install @jodolrui/glue
 ```
 
 ## Version
+* __1.0.5__ `defineState` function.
+
 * __1.0.4__ Typescript support in `exposed()` function.
 
 * __1.0.3__ Add license.
@@ -373,15 +375,46 @@ export default compose("Foobar", [foo, bar]);
 
 Note that using `<script setup>` you don't need to use `expose` function.
 
+## Centralizing component state with 'defineState'
 
+Function `defineState` allows to centralize component state declaration and preseting in one place and use it with TypeScript types in all your component parts.
 
+You have to declare and preset your state variables creating a `useState` function this way:
 
+```js
+// state.ts
+import { defineState } from "glue";
+import { Ref, ref } from "vue";
 
+export function useState() {
+  return defineState<{
+    foo: Ref<string>;
+    bar: Ref<string>;
+  }>({
+    foo: ref("Foo"),
+    bar: ref("Bar")
+  });
+}
+```
 
+Then you can access your state calling `useState` function from any component part:
 
+```js
+// foo.js
+import { ref } from "vue";
+import { useState } from "../state";
+export default {
+  props: { foo: { type: String, default: "Foo" } },
+  emits: ["foo"],
+  setup(props, context) {
+    const state = useState();
+    state.foo.value = props.foo;
+    context.emit("foo");
+  },
+};
+```
 
-
-
+You don't need to `return`, `expose` nor `exposed` when using state centralization with `defineState` and `useState`.
 
 
 

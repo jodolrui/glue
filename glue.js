@@ -195,3 +195,13 @@ export function exposed(component) {
   const instance = getInstance(component, "exposed");
   return instance.exposed();
 }
+
+//* "defineState" function
+export function defineState(defaultValue) {
+  const gi = getCurrentInstance()?.glueInstance;
+  const isEmpty =
+    Object.keys(gi?.exposed()).length === 0 &&
+    Object.getPrototypeOf(gi?.exposed()) === Object.prototype;
+  if (isEmpty) gi?.expose(defaultValue);
+  return getCurrentInstance()?.glueInstance.exposed();
+}
