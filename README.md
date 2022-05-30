@@ -377,7 +377,7 @@ Note that using `<script setup>` you don't need to use `expose` function.
 
 ## Centralizing component state with 'defineState'
 
-Function `defineState` allows to centralize component state declaration and preseting in one place and use it with TypeScript types in all your component parts.
+Function `defineState` allows you to centralize component state declaration and preseting in one place and use it with `typescript` types in all your component parts.
 
 You have to declare and preset your state variables creating a `useState` function this way:
 
@@ -407,7 +407,7 @@ export default {
   props: { foo: { type: String, default: "Foo" } },
   emits: ["foo"],
   setup(props, context) {
-    const state = useState();
+    const state = useState(); // state is typed
     state.foo.value = props.foo;
     context.emit("foo");
   },
