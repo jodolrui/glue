@@ -13,6 +13,8 @@ npm install @jodolrui/glue
 ```
 
 ## Version
+* __1.0.6__ Bug fixed.
+
 * __1.0.5__ `defineState` function.
 
 * __1.0.4__ Typescript support in `exposed()` function.

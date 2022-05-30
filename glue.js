@@ -198,10 +198,10 @@ export function exposed(component) {
 
 //* "defineState" function
 export function defineState(defaultValue) {
-  const gi = getCurrentInstance()?.glueInstance;
+  const gi = getCurrentInstance().glueInstance;
   const isEmpty =
-    Object.keys(gi?.exposed()).length === 0 &&
-    Object.getPrototypeOf(gi?.exposed()) === Object.prototype;
-  if (isEmpty) gi?.expose(defaultValue);
-  return getCurrentInstance()?.glueInstance.exposed();
+    Object.keys(gi.exposed()).length === 0 &&
+    Object.getPrototypeOf(gi.exposed()) === Object.prototype;
+  if (isEmpty) gi.expose(defaultValue);
+  return gi.exposed();
 }
